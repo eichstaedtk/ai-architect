@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: ai-architect
+
+chatmodel:
+  baseurl: http://localhost:11434
+  modelname: codellama:7b
+  temperature: 0.1
