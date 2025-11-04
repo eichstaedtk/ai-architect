@@ -6,3 +6,7 @@ chatmodel:
   baseurl: http://localhost:11434
   modelname: codellama:7b
   temperature: 0.1
+
+embeddingmodel:
+  baseurl: http://localhost:8000
+  collectioname: architecture_kb

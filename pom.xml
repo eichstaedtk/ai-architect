@@ -28,6 +28,18 @@
       <artifactId>spring-boot-starter</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.ai</groupId>
+      <artifactId>spring-ai-client-chat</artifactId>
+      <version>1.1.0-M3</version>
+    </dependency>
+
+
     <!-- LangChain4j für RAG -->
     <dependency>
       <groupId>dev.langchain4j</groupId>
