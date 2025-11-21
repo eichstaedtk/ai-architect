@@ -14,12 +14,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PromptEngine {
 
-  public static String createPromptWithVariables(Map<String, Object> values) {
+  private PromptEngine() {
+  }
+
+  public static final Map<String, Object> PROMPT_VARIABLES = Map.of("concepts",
+      "Domain Driven Design, Clean Code, Test Driven Development", "role",
+      "Softwarearchitekt", "language", "Deutsch", "format", "HTML");
+
+  public static String createPromptWithVariables() {
     String prompt = "";
-    log.info("Creating prompt with values {}", values);
+    log.info("Creating prompt with values {}", PROMPT_VARIABLES);
     try {
       prompt = PromptTemplate.from(Files.readString(Path.of("src/main/resources/system-prompt.st")))
-          .apply(values).text();
+          .apply(PROMPT_VARIABLES).text();
     } catch (IOException e) {
       log.error("Error during creating prompt {}", e.getMessage(), e);
     }

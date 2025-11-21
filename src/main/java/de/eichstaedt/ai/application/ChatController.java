@@ -26,9 +26,6 @@ import reactor.core.publisher.Flux;
 @RestController
 public class ChatController {
 
-  public static final Map<String, Object> PROMPT_VARIABLES = Map.of("concepts",
-      "Domain Driven Design, Clean Code, Test Driven Development", "role",
-      "Softwarearchitekt", "language", "Deutsch", "format", "HTML");
   private final OllamaChatModel chatModel;
 
   private final OllamaStreamingChatModel streamingChatModel;
@@ -74,15 +71,13 @@ public class ChatController {
 
   private static ChatRequest createChatRequest(String message) {
     List<ChatMessage> messages = List.of(
-        SystemMessage.from(PromptEngine.createPromptWithVariables(
-            PROMPT_VARIABLES)),
+        SystemMessage.from(PromptEngine.createPromptWithVariables()),
         UserMessage.from(message)
     );
 
-    ChatRequest request = ChatRequest.builder()
+    return ChatRequest.builder()
         .messages(messages)
         .maxOutputTokens(1000)
         .build();
-    return request;
   }
 }
