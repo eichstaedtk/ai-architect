@@ -46,15 +46,7 @@ public class ChatController {
   public Flux<String> generateReactive(
       @RequestParam(value = "message", defaultValue = "Erzähle einen guten Witz") String message) {
 
-    List<ChatMessage> messages = List.of(
-        SystemMessage.from(PromptEngine.createPromptWithVariables(Map.of("language", "Deutsch"))),
-        UserMessage.from(message)
-    );
-
-    ChatRequest request = ChatRequest.builder()
-        .messages(messages)
-        .maxOutputTokens(1000)
-        .build();
+    ChatRequest request = createChatRequest(message);
 
     return Flux.create(sink -> streamingChatModel.chat(request, new StreamingChatResponseHandler() {
 
@@ -71,8 +63,23 @@ public class ChatController {
 
       @Override
       public void onError(Throwable error) {
+        log.error("Error during chat with llm", error);
         sink.error(error);
       }
     }));
+  }
+
+  private static ChatRequest createChatRequest(String message) {
+    List<ChatMessage> messages = List.of(
+        SystemMessage.from(PromptEngine.createPromptWithVariables(
+            Map.of("language", "Deutsch", "format", "HTML"))),
+        UserMessage.from(message)
+    );
+
+    ChatRequest request = ChatRequest.builder()
+        .messages(messages)
+        .maxOutputTokens(1000)
+        .build();
+    return request;
   }
 }

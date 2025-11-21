@@ -1,0 +1,8 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-solution-strategy]]
+== Lösungsstrategie
+
+ifdef::arc42help[]
+
+endif::arc42help[]

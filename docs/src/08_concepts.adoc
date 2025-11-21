@@ -1,0 +1,22 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-concepts]]
+== Querschnittliche Konzepte
+
+ifdef::arc42help[]
+
+endif::arc42help[]
+
+=== _<Konzept 1>_
+
+_<Erklärung>_
+
+=== _<Konzept 2>_
+
+_<Erklärung>_
+
+...
+
+=== _<Konzept n>_
+
+_<Erklärung>_

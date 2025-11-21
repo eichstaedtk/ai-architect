@@ -18,7 +18,7 @@ public class PromptEngine {
     String prompt = "";
     try {
       prompt = PromptTemplate.from(Files.readString(Path.of("src/main/resources/system-prompt.st")))
-          .apply(Map.of("language", "Deutsch", "format", "HTML")).text();
+          .apply(values).text();
     } catch (IOException e) {
       log.error("Error during creating prompt {}", e.getMessage(), e);
     }

@@ -1,0 +1,24 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-quality-scenarios]]
+== Qualitätsanforderungen
+
+ifdef::arc42help[]
+
+endif::arc42help[]
+
+.Weiterführende Informationen
+
+Siehe https://docs.arc42.org/section-10/[Qualitätsanforderungen] in der online-Dokumentation (auf Englisch!).
+
+=== Qualitätsbaum
+
+ifdef::arc42help[]
+
+endif::arc42help[]
+
+=== Qualitätsszenarien
+
+ifdef::arc42help[]
+
+endif::arc42help[]
