@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Streaming Client</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    .container {
+      background: white;
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      resize: vertical;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 12px;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    #response {
+      margin-top: 20px;
+      padding: 16px;
+      background: #f8f9fa;
+      border-radius: 4px;
+      min-height: 100px;
+      white-space: pre-wrap;
+      font-family: 'Courier New', monospace;
+      line-height: 1.6;
+    }
+
+    .status {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>🤖 LLM Streaming Client</h1>
+
+  <textarea id="prompt" rows="4" aria-label="Quetsion Area"
+            placeholder="Deine Frage an den Softwarearchitektur-Assistenten...">Erkläre mir das Hexagonal Architecture Pattern</textarea>
+
+  <button id="sendBtn" onclick="sendRequest()">Senden</button>
+  <button id="stopBtn" onclick="stopStream()" style="display:none; background:#dc3545;">Stop
+  </button>
+
+  <div class="status" id="status"></div>
+
+  <div id="response"></div>
+</div>
+
+<script>
+  let eventSource = null;
+  let responseText = '';
+
+  // Methode 1: Plain Text Stream (einfachste Lösung)
+  async function sendRequestPlainText() {
+    const prompt = document.getElementById('prompt').value;
+    const responseDiv = document.getElementById('response');
+    const sendBtn = document.getElementById('sendBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const statusDiv = document.getElementById('status');
+
+    responseText = '';
+    responseDiv.textContent = '';
+    sendBtn.disabled = true;
+    stopBtn.style.display = 'inline-block';
+    statusDiv.textContent = 'Streaming...';
+
+    try {
+      const response = await fetch(`/ai/generate-reactive?message=${encodeURIComponent(prompt)}`);
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const {done, value} = await reader.read();
+
+        if (done) {
+          statusDiv.textContent = 'Fertig!';
+          break;
+        }
+
+        // Tokens direkt anzeigen - kein "data:" Parsing nötig!
+        const chunk = decoder.decode(value, {stream: true});
+        responseText += chunk;
+        responseDiv.textContent = responseText;
+      }
+    } catch (error) {
+      statusDiv.textContent = 'Fehler: ' + error.message;
+    } finally {
+      sendBtn.disabled = false;
+      stopBtn.style.display = 'none';
+    }
+  }
+
+  // Methode 2: Server-Sent Events (falls du SSE verwendest)
+  function sendRequestSSE() {
+    const prompt = document.getElementById('prompt').value;
+    const responseDiv = document.getElementById('response');
+    const sendBtn = document.getElementById('sendBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const statusDiv = document.getElementById('status');
+
+    responseText = '';
+    responseDiv.textContent = '';
+    sendBtn.disabled = true;
+    stopBtn.style.display = 'inline-block';
+    statusDiv.textContent = 'Streaming...';
+
+    // EventSource für Server-Sent Events
+    eventSource = new EventSource(`/ai/generate-reactive?message=${encodeURIComponent(prompt)}`);
+
+    eventSource.onmessage = function (event) {
+      // event.data enthält schon nur den Token (ohne "data:" Präfix)
+      // EventSource parst das SSE Format automatisch
+      responseText += event.data;
+      responseDiv.textContent = responseText;
+    };
+
+    eventSource.onerror = function (error) {
+      console.error('EventSource error:', error);
+      statusDiv.textContent = 'Verbindung beendet';
+      eventSource.close();
+      sendBtn.disabled = false;
+      stopBtn.style.display = 'none';
+    };
+
+    // Optional: Custom Event für "complete"
+    eventSource.addEventListener('complete', function (event) {
+      statusDiv.textContent = 'Fertig!';
+      eventSource.close();
+      sendBtn.disabled = false;
+      stopBtn.style.display = 'none';
+    });
+  }
+
+  // Verwende die Plain Text Methode (empfohlen)
+  function sendRequest() {
+    sendRequestPlainText();
+  }
+
+  function stopStream() {
+    if (eventSource) {
+      eventSource.close();
+      eventSource = null;
+    }
+    document.getElementById('sendBtn').disabled = false;
+    document.getElementById('stopBtn').style.display = 'none';
+    document.getElementById('status').textContent = 'Gestoppt';
+  }
+</script>
+</body>
+</html>
