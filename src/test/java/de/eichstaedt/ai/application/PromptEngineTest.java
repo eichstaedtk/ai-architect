@@ -1,8 +1,8 @@
 package de.eichstaedt.ai.application;
 
+import static de.eichstaedt.ai.application.ChatController.PROMPT_VARIABLES;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -13,7 +13,7 @@ public class PromptEngineTest {
   @Test
   void createPrompt() {
     String prompt = PromptEngine.createPromptWithVariables(
-        Map.of("language", "Deutsch", "format", "HTML"));
+        PROMPT_VARIABLES);
     assertNotNull(prompt);
   }
 }
