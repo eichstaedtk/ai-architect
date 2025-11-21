@@ -14,8 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PromptEngine {
 
-  public static String createPromptWithVariables(Map<String, String> values) {
+  public static String createPromptWithVariables(Map<String, Object> values) {
     String prompt = "";
+    log.info("Creating prompt with values {}", values);
     try {
       prompt = PromptTemplate.from(Files.readString(Path.of("src/main/resources/system-prompt.st")))
           .apply(values).text();

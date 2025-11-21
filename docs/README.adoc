@@ -5,7 +5,7 @@
 
 
 // configure DE settings for asciidoc
-include::docs/src/config.adoc[]
+include::src//config.adoc[]
 
 = image:arc42-logo.png[arc42] Template
 :revnumber: 8.2 DE
@@ -13,6 +13,7 @@ include::docs/src/config.adoc[]
 :revremark: (basiert auf AsciiDoc Version)
 // toc-title definition MUST follow document title without blank line!
 :toc-title: Inhaltsverzeichnis
+:title: Software Architecture AI Project
 
 //additional style for arc42 help callouts
 ifdef::backend-html5[]
@@ -30,64 +31,58 @@ ifdef::backend-html5[]
 endif::backend-html5[]
 
 
-include::docs/src/about-arc42.adoc[]
+include::src//about-arc42.adoc[]
 
 // horizontal line
 ***
 
-ifdef::arc42help[]
-
-endif::arc42help[]
-
 // numbering from here on
 :numbered:
 
-= Software Architecture AI Project
-
 <<<<
 // 1. Anforderungen und Ziele
-include::docs/src/01_introduction_and_goals.adoc[]
+include::src//01_introduction_and_goals.adoc[]
 
 <<<<
 // 2. Randbedingungen
-include::docs/src/02_architecture_constraints.adoc[]
+include::src//02_architecture_constraints.adoc[]
 
 <<<<
 // 3. Kontextabgrenzung
-include::docs/src/03_context_and_scope.adoc[]
+include::src//03_context_and_scope.adoc[]
 
 <<<<
 // 4. Lösungsstrategie
-include::docs/src/04_solution_strategy.adoc[]
+include::src//04_solution_strategy.adoc[]
 
 <<<<
 // 5. Bausteinsicht
-include::docs/src/05_building_block_view.adoc[]
+include::src//05_building_block_view.adoc[]
 
 <<<<
 // 6. Laufzeitsicht
-include::docs/src/06_runtime_view.adoc[]
+include::src//06_runtime_view.adoc[]
 
 <<<<
 // 7. Verteilungssicht
-include::docs/src/07_deployment_view.adoc[]
+include::src//07_deployment_view.adoc[]
 
 <<<<
 // 8. Querschnittliche Konzepte
-include::docs/src/08_concepts.adoc[]
+include::src//08_concepts.adoc[]
 
 <<<<
 // 9. Entscheidungen
-include::docs/src/09_architecture_decisions.adoc[]
+include::src//09_architecture_decisions.adoc[]
 
 <<<<
 // 10. Qualitätsanforderungen
-include::docs/src/10_quality_requirements.adoc[]
+include::src//10_quality_requirements.adoc[]
 
 <<<<
 // 11. Risiken
-include::docs/src/11_technical_risks.adoc[]
+include::src//11_technical_risks.adoc[]
 
 <<<<
 // 12. Glossar
-include::docs/src/12_glossary.adoc[]
+include::src//12_glossary.adoc[]
