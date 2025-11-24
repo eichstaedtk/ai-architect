@@ -3,6 +3,7 @@ package de.eichstaedt.ai.application;
 import dev.langchain4j.data.message.ChatMessage;
 import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.UserMessage;
+import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.model.chat.request.ChatRequest;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.chat.response.StreamingChatResponseHandler;
@@ -30,10 +31,14 @@ public class ChatController {
 
   private final OllamaStreamingChatModel streamingChatModel;
 
+  private final ChatMemory chatMemory;
+
   @Autowired
-  public ChatController(OllamaChatModel chatModel, OllamaStreamingChatModel streamingChatModel) {
+  public ChatController(OllamaChatModel chatModel, OllamaStreamingChatModel streamingChatModel,
+      ChatMemory chatMemory) {
     this.chatModel = chatModel;
     this.streamingChatModel = streamingChatModel;
+    this.chatMemory = chatMemory;
   }
 
   @GetMapping("/ai/generate")
