@@ -40,3 +40,18 @@ Nicht Kerngeschäft von Referat 22C, aber auch für sehr spannend und ein wichti
 Weiterentwicklung des Referats (und meines Erachtens IT-(Organisations)-fachlich sehr komplex und
 interessant): Zusammenarbeit von Softwareentwicklungs- bzw. DevOps-Teams mit Querschnittsbereichen
 wie z.B. Architekturmanagement und Software/DevOps Methodik/Tooling.
+
+## Ablauf des Asylverfahrens
+
+### Registrierung
+
+Kommt eine Person in Deutschland an muss, diese sich umgehend registrieren. Diese Person kann sich
+bei der Polizei, der Ausländerbehörde
+oder bei einer Aufnahmeeinrichtung melden. Die Registrierung geschieht an sogenannten PIK,
+Personalisierungsinfrastrukturkomponenten
+durch die jeweiligen Mitarbeiter. Die Person wird fotografiert und es werden die persönlichen Daten
+aufgenommen. Alle Daten werden im Ausländerzentralregister (AZR) gespeichert und mit den bereits
+vorhandenen Daten abgeglichen. Es wird geprüft ob es sich um einen Erstantrag, Folgeantrag oder
+Mehrfachantrag handelt. Darüber hinaus wird auf Basis des Systems EURODAC geprüft, ob ein anderer
+Staat für die
+Durchführung des Asylverfahrens zuständig ist. 

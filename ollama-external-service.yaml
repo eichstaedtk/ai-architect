@@ -1,0 +1,25 @@
+---
+# Service ohne Selector
+apiVersion: v1
+kind: Service
+metadata:
+  name: ollama-service
+  namespace: ai-architect
+spec:
+  ports:
+    - port: 11434
+      targetPort: 11434
+      protocol: TCP
+
+---
+# Endpoints mit deiner Mac IP
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: ollama-service
+  namespace: ai-architect
+subsets:
+  - addresses:
+      - ip: host.docker.internal  # ERSETZE mit deiner Mac IP!
+    ports:
+      - port: 11434
