@@ -54,4 +54,34 @@ aufgenommen. Alle Daten werden im Ausländerzentralregister (AZR) gespeichert un
 vorhandenen Daten abgeglichen. Es wird geprüft ob es sich um einen Erstantrag, Folgeantrag oder
 Mehrfachantrag handelt. Darüber hinaus wird auf Basis des Systems EURODAC geprüft, ob ein anderer
 Staat für die
-Durchführung des Asylverfahrens zuständig ist. 
+Durchführung des Asylverfahrens zuständig ist.
+
+### Erstverteilung der Asylsuchenden (EASY)
+
+Die Verteilung der Asylsuchenden auf die jeweiligen Bundesländer geschieht auf Basis des
+Königssteiner Schlüssels. Dieser
+berücksichtig zu 2 Drittel das Steueraufkommen und zu ein Drittel die Bevölkerungszahl des
+jeweiligen Bundeslandes. Nach Eingabe einer Erstmeldung durch eine Erstaufnahmeeinrichtung zeigt der
+Rechner innerhalb von 3-4 Sekunden die Verteilentscheidung an und registriert diese anhand einer vom
+System vergebenen und für das jeweilige Bundesland fortlaufenden Optionsnummer.Sofern der
+Asylbewerber entsprechend der EASY-Entscheidung in ein anderes Bundesland weiterreisen muss,
+veranlasst und finanziert das sendende Bundesland die Reise. Er erhält in diesem Fall eine
+sogenannte Anlaufbescheinigung. Diese enthält neben den persönlichen Daten auch die Adresse der für
+ihn zuständigen Aufnahmeeinrichtung sowie die Optionsnummer des EASY-Systems.
+
+### Aufnahmeeinrichtung
+
+Die zuständige Aufnahmeeinrichtung ist für die Versorgung und Unterkunft der Asylsuchenden
+verantwortlich. Gleichzeitig informiert sie die nächstgelegene Außenstelle des Bundesamts oder das
+nächstgelegene Ankunftszentrum.
+
+Rechtliche Grundlagen
+
+Der existenzsichernde Bedarf von Asylsuchenden wird gesetzlich festgelegt im
+Asylbewerberleistungsgesetz.
+
+Asylbewerberleistungsgesetz (AsylbLG)
+
+Während ihres Aufenthalts erhalten Asylsuchende bzw. Asylantragstellende existenzsichernde
+Sachleistungen und einen monatlichen Geldbetrag zur Deckung der persönlichen Bedürfnisse im Alltag.
+Art und Höhe der Leistungen sind durch das sogenannte Asylbewerberleistungsgesetz geregelt. 

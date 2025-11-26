@@ -82,34 +82,12 @@ metadata:
   labels:
     app: ai-architect
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - port: 80
       targetPort: 8080
+      nodePort: 30080
       protocol: TCP
       name: http
   selector:
     app: ai-architect
-
----
-# Optional: Ingress (falls du einen Ingress Controller hast)
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: ai-architect-ingress
-  namespace: ai-architect
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  ingressClassName: nginx
-  rules:
-    - host: ai-architect.local
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: ai-architect-service
-                port:
-                  number: 80
