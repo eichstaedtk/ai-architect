@@ -6,7 +6,6 @@ import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.model.chat.request.ChatRequest;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.chat.response.StreamingChatResponseHandler;
-import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.model.ollama.OllamaStreamingChatModel;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -27,14 +26,10 @@ import reactor.core.publisher.FluxSink.OverflowStrategy;
 @RestController
 public class ChatController {
 
-  private final OllamaChatModel chatModel;
-
   private final OllamaStreamingChatModel streamingChatModel;
 
-
   @Autowired
-  public ChatController(OllamaChatModel chatModel, OllamaStreamingChatModel streamingChatModel) {
-    this.chatModel = chatModel;
+  public ChatController(OllamaStreamingChatModel streamingChatModel) {
     this.streamingChatModel = streamingChatModel;
   }
 
