@@ -25,6 +25,7 @@
 <script>
   let eventSource = null;
   let responseText = '';
+  let requestID = '';
 
   // Methode 1: Plain Text Stream (einfachste Lösung)
   async function sendRequestPlainText() {
@@ -46,9 +47,10 @@
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ message: prompt })
+        body: JSON.stringify({message: prompt})
       });
       const reader = response.body.getReader();
+      requestID = response.headers.get('X-Request-ID');
       const decoder = new TextDecoder();
 
       while (true) {
@@ -119,6 +121,9 @@
   }
 
   function stopStream() {
+    fetch('/ai/stop/' + requestID, {
+      method: 'POST'
+    });
     if (eventSource) {
       eventSource.close();
       eventSource = null;
