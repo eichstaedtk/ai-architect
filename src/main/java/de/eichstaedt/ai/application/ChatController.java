@@ -3,21 +3,21 @@ package de.eichstaedt.ai.application;
 import dev.langchain4j.data.message.ChatMessage;
 import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.UserMessage;
-import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.model.chat.request.ChatRequest;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.chat.response.StreamingChatResponseHandler;
 import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.model.ollama.OllamaStreamingChatModel;
 import java.util.List;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.FluxSink.OverflowStrategy;
 
 /**
  * Created by konrad.eichstaedt@gmx.de on 28.10.25.
@@ -31,28 +31,21 @@ public class ChatController {
 
   private final OllamaStreamingChatModel streamingChatModel;
 
-  private final ChatMemory chatMemory;
 
   @Autowired
-  public ChatController(OllamaChatModel chatModel, OllamaStreamingChatModel streamingChatModel,
-      ChatMemory chatMemory) {
+  public ChatController(OllamaChatModel chatModel, OllamaStreamingChatModel streamingChatModel) {
     this.chatModel = chatModel;
     this.streamingChatModel = streamingChatModel;
-    this.chatMemory = chatMemory;
   }
 
-  @GetMapping("/ai/generate")
-  public Map<String, String> generate(
-      @RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
-    return Map.of("generation", this.chatModel.chat(message));
-  }
-
-  @GetMapping(value = "/ai/generate-reactive", produces = MediaType.TEXT_PLAIN_VALUE)
-  public Flux<String> generateReactive(
-      @RequestParam(value = "message", defaultValue = "Erzähle einen guten Witz") String message) {
-
+  @PostMapping(value = "/ai/askthellm", produces = MediaType.TEXT_PLAIN_VALUE)
+  public Flux<String> askTheLLM(@RequestBody String message) {
     ChatRequest request = createChatRequest(message);
+    return createFluxResponse(request);
+  }
 
+  @NotNull
+  private Flux<String> createFluxResponse(ChatRequest request) {
     return Flux.create(sink -> streamingChatModel.chat(request, new StreamingChatResponseHandler() {
 
       @Override
@@ -71,7 +64,7 @@ public class ChatController {
         log.error("Error during chat with llm", error);
         sink.error(error);
       }
-    }));
+    }), OverflowStrategy.BUFFER);
   }
 
   private static ChatRequest createChatRequest(String message) {

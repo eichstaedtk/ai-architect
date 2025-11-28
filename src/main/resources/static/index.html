@@ -41,7 +41,13 @@
     statusDiv.textContent = 'Streaming...';
 
     try {
-      const response = await fetch(`/ai/generate-reactive?message=${encodeURIComponent(prompt)}`);
+      const response = await fetch('/ai/askthellm', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: prompt })
+      });
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
 

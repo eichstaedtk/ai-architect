@@ -18,6 +18,10 @@ data:
   OLLAMA_TEMPERATURE: "0.9"
   OLLAMA_MAX_MESSAGES: "10"
   SPRING_PROFILES_ACTIVE: "kubernetes"
+  INFO_APP_NAME: "ai-architect"
+  INFO_APP_DESCRIPTION: "Artificial Intelligenz Application for Softwarearchitects"
+  MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "info,health"
+  MANAGEMENT_INFO_ENV_ENABLED: "true"
 
 ---
 # Deployment
@@ -37,10 +41,12 @@ spec:
     metadata:
       labels:
         app: ai-architect
+      annotations:
+        kubernetes.io/change-cause: "Initial Deplyoment"
     spec:
       containers:
         - name: ai-architect
-          image: ai-architect:latest
+          image: ai-architect:0.0.1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

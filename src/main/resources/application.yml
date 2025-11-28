@@ -17,7 +17,12 @@ management:
     readinessState:
       enabled: true
 
-  ollama:
-    base-url: http://localhost:11434
-    model-name: codellama:7b
-    temperature: 0.9
+ollama:
+  base-url: http://localhost:11434
+  model-name: codellama:7b
+  temperature: 0.9
+
+info:
+  app:
+    name: ai-architect
+    description: Artificial Intelligenz Application for Softwarearchitects
