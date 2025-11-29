@@ -42,11 +42,11 @@ spec:
       labels:
         app: ai-architect
       annotations:
-        kubernetes.io/change-cause: "Initial Deplyoment"
+        kubernetes.io/change-cause: "Use Case Stop LLM"
     spec:
       containers:
         - name: ai-architect
-          image: ai-architect:0.0.1
+          image: ai-architect:0.0.2
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

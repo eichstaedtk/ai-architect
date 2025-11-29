@@ -5,6 +5,8 @@ import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.model.chat.request.ChatRequest;
 import dev.langchain4j.model.chat.response.ChatResponse;
+import dev.langchain4j.model.chat.response.PartialResponse;
+import dev.langchain4j.model.chat.response.PartialResponseContext;
 import dev.langchain4j.model.chat.response.StreamingChatResponseHandler;
 import dev.langchain4j.model.ollama.OllamaStreamingChatModel;
 import java.util.List;
@@ -77,9 +79,13 @@ public class ChatController {
       var future = executor.submit(
           () -> streamingChatModel.chat(request, new StreamingChatResponseHandler() {
             @Override
-            public void onPartialResponse(String s) {
-              log.info("Partial : {}", s);
-              sink.next(s);
+            public void onPartialResponse(
+                PartialResponse partialResponse, PartialResponseContext context) {
+              if (!stopSignals.containsKey(requestId)) {
+                context.streamingHandle().cancel();
+              }
+              log.info("Partial : {}", partialResponse.text());
+              sink.next(partialResponse.text());
             }
 
             @Override
