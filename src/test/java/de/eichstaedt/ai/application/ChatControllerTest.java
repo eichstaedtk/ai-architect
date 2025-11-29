@@ -3,13 +3,17 @@ package de.eichstaedt.ai.application;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.model.chat.request.ChatRequest;
 import dev.langchain4j.model.chat.response.ChatResponse;
+import dev.langchain4j.model.chat.response.PartialResponse;
+import dev.langchain4j.model.chat.response.PartialResponseContext;
 import dev.langchain4j.model.chat.response.StreamingChatResponseHandler;
 import dev.langchain4j.model.ollama.OllamaStreamingChatModel;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.context.annotation.Import;
@@ -47,8 +51,11 @@ class ChatControllerTest {
       StreamingChatResponseHandler handler = invocation.getArgument(1);
 
       String[] tokens = {"Hello", " ", "from", " ", "AI"};
+      PartialResponse partialResponse = Mockito.mock(PartialResponse.class);
+      PartialResponseContext context = Mockito.mock(PartialResponseContext.class);
       for (String token : tokens) {
-        handler.onPartialResponse(token);
+        when(partialResponse.text()).thenReturn(token);
+        handler.onPartialResponse(partialResponse, context);
       }
 
       handler.onCompleteResponse(
